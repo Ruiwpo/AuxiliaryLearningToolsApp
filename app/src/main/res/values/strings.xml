@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">MyFirstApp</string>
+    <string name="title">STUDY</string>
+    <string name="pause">PAUSE</string>
+    <string name="start">START</string>
+    <string name="reset">RESET</string>
+    <string name="todo_list">TO-DO LIST</string>
+    <string name="calculator">CALCULATOR</string>
+    <string name="alarm_clock">ALARM CLOCK</string>
+    <string name="baidu">BAIDU</string>
+</resources>
