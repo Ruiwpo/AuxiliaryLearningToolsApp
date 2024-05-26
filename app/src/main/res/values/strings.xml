@@ -9,6 +9,10 @@
     <string name="alarm_clock">ALARM CLOCK</string>
     <string name="baidu">BAIDU</string>
     <string name="memo_title">MEMO</string>
-    <string name="memo_save">save</string>
-    <string name="memo_back">back</string>
+    <string name="memo_save">Save</string>
+    <string name="memo_back">Back</string>
+    <string name="set_clock">Set</string>
+    <string name="cancel_clock">Cancel</string>
+    <string name="alarm_clock_title">Alarm Clock</string>
+    <string name="alarm_clock_back">Back</string>
 </resources>

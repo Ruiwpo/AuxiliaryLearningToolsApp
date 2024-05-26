@@ -29,21 +29,21 @@ public class MemoActivity extends AppCompatActivity {
     }
 
     public void save(View btn) {
-        //保存数据，并返回到调用页面
+        //保存新的备忘录数据
         newMemo = memo_content.getText().toString();
         Log.i(TAG, "save: " + newMemo);
     }
 
     public void back(View btn) {
-        //带回数据到调用页面RateActivity
-        Intent retIntent = getIntent();
+        //带回备忘录数据到主页面
+        Intent memoIntent = getIntent();
         Bundle bdl = new Bundle();
         bdl.putString("memo_key2", newMemo);
-        retIntent.putExtras(bdl);
+        memoIntent.putExtras(bdl);
 
         Log.i(TAG, "back: " + newMemo);
 
-        setResult(2, retIntent);
+        setResult(2, memoIntent);
 
         finish();
     }

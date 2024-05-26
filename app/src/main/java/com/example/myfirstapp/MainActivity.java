@@ -84,14 +84,23 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    public void open(View btn){
+    //打开备忘录界面
+    public void openMemo(View v){
         Intent memo = new Intent(this, MemoActivity.class);
         memo.putExtra("memo_key", memoString);
 
         Log.i(TAG, "open: memoString="+memoString);
 
-        //startActivity(config);
         startActivityForResult(memo,1);
+    }
+
+    //打开闹钟界面
+    public void openAlarmClock(View v){
+        Intent alarmClock = new Intent(this, AlarmClockActivity.class);
+
+        Log.i(TAG, "open: AlarmClockActivty");
+
+        startActivityForResult(alarmClock,3);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
@@ -101,7 +110,7 @@ public class MainActivity extends AppCompatActivity
 
             Log.i(TAG, "onActivityResult: " + memoString);
 
-            //保存新的汇率数据到->SharedPreferences
+            //保存备忘录内容数据到SharedPreferences
             SharedPreferences sp = getSharedPreferences("memo", Activity.MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
             editor.putString("memo_context", memoString);
