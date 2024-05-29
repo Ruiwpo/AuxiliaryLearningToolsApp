@@ -103,6 +103,14 @@ public class MainActivity extends AppCompatActivity
         startActivityForResult(alarmClock,3);
     }
 
+    public void openCalculator(View v){
+        Intent calculator = new Intent(this, CalculatorActivity.class);
+
+        Log.i(TAG, "open: CalculatorActivty");
+
+        startActivityForResult(calculator,5);
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
         if(requestCode==1 && resultCode==2) {
             Bundle bdl2 = data.getExtras();

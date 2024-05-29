@@ -51,6 +51,7 @@
         android:textSize="24sp"
         android:textStyle="bold"
         android:typeface="normal"
+        android:onClick="openCalculator"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.81"
