@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -100,7 +101,7 @@ public class MainActivity extends AppCompatActivity
 
         Log.i(TAG, "open: AlarmClockActivty");
 
-        startActivityForResult(alarmClock,3);
+        startActivity(alarmClock);
     }
 
     public void openCalculator(View v){
@@ -108,7 +109,13 @@ public class MainActivity extends AppCompatActivity
 
         Log.i(TAG, "open: CalculatorActivty");
 
-        startActivityForResult(calculator,5);
+        startActivity(calculator);
+    }
+
+    public void openWebsite(View v){
+        Uri uri = Uri.parse("https://www.baidu.com/");
+        Intent web = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(web);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
