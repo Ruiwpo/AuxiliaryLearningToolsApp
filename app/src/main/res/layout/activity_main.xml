@@ -25,7 +25,7 @@
 
     <Button
         android:id="@+id/todolist"
-        android:layout_width="237dp"
+        android:layout_width="255dp"
         android:layout_height="62dp"
         android:backgroundTint="#752196F3"
         android:fontFamily="monospace"
@@ -43,15 +43,15 @@
 
     <Button
         android:id="@+id/calculator"
-        android:layout_width="237dp"
+        android:layout_width="255dp"
         android:layout_height="62dp"
         android:backgroundTint="#FDF4568C"
         android:fontFamily="monospace"
+        android:onClick="openCalculator"
         android:text="@string/calculator"
         android:textSize="24sp"
         android:textStyle="bold"
         android:typeface="normal"
-        android:onClick="openCalculator"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.81"
@@ -61,15 +61,15 @@
 
     <Button
         android:id="@+id/alarm_clock"
-        android:layout_width="237dp"
+        android:layout_width="255dp"
         android:layout_height="62dp"
         android:backgroundTint="#752196F3"
         android:fontFamily="monospace"
+        android:onClick="openAlarmClock"
         android:text="@string/alarm_clock"
         android:textSize="24sp"
         android:textStyle="bold"
         android:typeface="normal"
-        android:onClick="openAlarmClock"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.166"
@@ -79,7 +79,7 @@
 
     <Button
         android:id="@+id/website"
-        android:layout_width="237dp"
+        android:layout_width="255dp"
         android:layout_height="62dp"
         android:backgroundTint="#FDF4568C"
         android:fontFamily="monospace"
@@ -101,7 +101,7 @@
         android:layout_height="64dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintHorizontal_bias="0.346"
         app:layout_constraintStart_toEndOf="@+id/todolist"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.554"
@@ -113,7 +113,7 @@
         android:layout_height="64dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/calculator"
-        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintHorizontal_bias="0.53"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.698"
@@ -125,7 +125,7 @@
         android:layout_height="72dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintHorizontal_bias="0.906"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.84"
@@ -189,5 +189,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.22" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.085"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.959"
+        app:srcCompat="@drawable/website" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

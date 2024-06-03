@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity
     private Button pause;  //暂停计时按钮
     private Button reset;  //重置计时器按钮
     private long record_time = 0;  //当暂停时，记录已经经过的的时间
-    private String memoString;
+    private String memoString, websiteString, nameString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +39,10 @@ public class MainActivity extends AppCompatActivity
 
         SharedPreferences sharedPreferences = getSharedPreferences("memo", Activity.MODE_PRIVATE);
         memoString = sharedPreferences.getString("memo_context", "");
+
+        SharedPreferences sharedPreferences2 = getSharedPreferences("website", Activity.MODE_PRIVATE);
+        websiteString = sharedPreferences2.getString("website_content2", "");
+        nameString = sharedPreferences2.getString("name_content2", "");
 
         Log.i(TAG, "onCreate: get from sp:" + memoString);
     }
@@ -112,9 +116,13 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void openWebsite(View v){
-        Uri uri = Uri.parse("https://www.baidu.com/");
-        Intent web = new Intent(Intent.ACTION_VIEW, uri);
-        startActivity(web);
+        Intent website = new Intent(this, WebActivity.class);
+        website.putExtra("website_key", memoString);
+        website.putExtra("name_key", nameString);
+
+        Log.i(TAG, "open: WebActivty");
+
+        startActivityForResult(website,10);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
@@ -130,6 +138,21 @@ public class MainActivity extends AppCompatActivity
             editor.putString("memo_context", memoString);
             editor.apply();
             Log.i(TAG, "save to sp:" + memoString);
+        } else if (requestCode==10 && resultCode==11) {
+            Bundle bdl2 = data.getExtras();
+            websiteString = bdl2.getString("website_content", "");
+            nameString = bdl2.getString("name_content", "");
+
+            Log.i(TAG, "onActivityResult: " + websiteString);
+
+            //保存备忘录内容数据到SharedPreferences
+            SharedPreferences sp2 = getSharedPreferences("website", Activity.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp2.edit();
+            editor.putString("website_content2", websiteString);
+            editor.putString("name_content2", nameString);
+            editor.apply();
+            Log.i(TAG, "save to sp:" + websiteString);
+            Log.i(TAG, "save to sp:" + nameString);
         }
 
         super.onActivityResult(requestCode, resultCode, data);
