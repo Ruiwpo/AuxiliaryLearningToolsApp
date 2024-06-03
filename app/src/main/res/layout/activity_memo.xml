@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#25FF9800"
     android:orientation="vertical"
     android:padding="28dp"
     tools:context=".MemoActivity">
@@ -23,31 +24,35 @@
         android:id="@+id/memo_content"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
         android:background="@android:drawable/edit_text"
         android:enabled="true"
         android:gravity="top"
         android:inputType="textMultiLine"
         android:maxLines="50"
         android:minLines="20"
-        android:layout_marginBottom="24dp"
         android:scrollbars="vertical" />
 
     <Button
         android:id="@+id/memo_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/memo_save"
         android:layout_marginBottom="12dp"
+        android:backgroundTint="#75FF9800"
+        android:onClick="save"
+        android:text="@string/memo_save"
         android:textSize="20sp"
-        android:onClick="save" />
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/memo_back"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="#FEB03F"
+        android:onClick="back"
         android:text="@string/memo_back"
         android:textSize="20sp"
-        android:onClick="back" />
+        android:textStyle="bold" />
 
 
 </LinearLayout>

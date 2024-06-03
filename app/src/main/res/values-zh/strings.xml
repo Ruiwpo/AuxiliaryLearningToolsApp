@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">应用</string>
+    <string name="title">计时</string>
+    <string name="pause">暂停</string>
+    <string name="start">开始</string>
+    <string name="reset">重置</string>
+    <string name="memo">备忘录</string>
+    <string name="calculator">计算器</string>
+    <string name="alarm_clock">闹钟</string>
+    <string name="website">百度</string>
+    <string name="memo_title">备忘录</string>
+    <string name="memo_save">保存</string>
+    <string name="memo_back">返回</string>
+    <string name="set_clock">设置闹钟</string>
+    <string name="cancel_clock">取消</string>
+    <string name="alarm_clock_title">闹钟</string>
+    <string name="alarm_clock_back">返回</string>
+    <string name="alarm_clock_content">无闹钟</string>
+    <string name="calculator_back">返回</string>
+</resources>

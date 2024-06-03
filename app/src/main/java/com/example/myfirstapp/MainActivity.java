@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity
         if(v.getId()==R.id.start) {
             //设置计时基准时间，防止暂停计时期间后台仍继续计时，导致继续计时后计时器时间出现跳跃
             chronometer.setBase(SystemClock.elapsedRealtime() - record_time);
-
             chronometer.start();  //开始计时
         } else if (v.getId() == R.id.pause) {
             record_time = SystemClock.elapsedRealtime() - chronometer.getBase();
