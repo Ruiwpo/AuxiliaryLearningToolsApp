@@ -3,7 +3,6 @@ package com.example.myfirstapp;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 public class TimeUpActivity extends AppCompatActivity {

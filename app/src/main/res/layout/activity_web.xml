@@ -162,14 +162,14 @@
 
     <ImageView
         android:id="@+id/imageView5"
-        android:layout_width="65dp"
-        android:layout_height="75dp"
+        android:layout_width="63dp"
+        android:layout_height="68dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.029"
+        app:layout_constraintHorizontal_bias="0.026"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.515"
+        app:layout_constraintVertical_bias="0.506"
         app:srcCompat="@drawable/youdao" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
