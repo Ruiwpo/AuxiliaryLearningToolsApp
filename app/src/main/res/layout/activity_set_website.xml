@@ -40,7 +40,7 @@
         android:text="Finish"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:onClick="finish"
+        android:onClick="finishSet"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

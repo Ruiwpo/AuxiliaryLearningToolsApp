@@ -44,7 +44,9 @@ public class MainActivity extends AppCompatActivity
         websiteString = sharedPreferences2.getString("website_content2", "");
         nameString = sharedPreferences2.getString("name_content2", "");
 
-        Log.i(TAG, "onCreate: get from sp:" + memoString);
+        Log.i(TAG, "onCreate: Main get from sp:" + memoString);
+        Log.i(TAG, "onCreate: Main get from sp:" + websiteString);
+        Log.i(TAG, "onCreate: Main get from sp:" + nameString);
     }
 
     private void initView() {
@@ -107,6 +109,7 @@ public class MainActivity extends AppCompatActivity
         startActivity(alarmClock);
     }
 
+    //打开计算器页面
     public void openCalculator(View v){
         Intent calculator = new Intent(this, CalculatorActivity.class);
 
@@ -115,12 +118,14 @@ public class MainActivity extends AppCompatActivity
         startActivity(calculator);
     }
 
+    //打开快速浏览页面
     public void openWebsite(View v){
         Intent website = new Intent(this, WebActivity.class);
-        website.putExtra("website_key", memoString);
+        website.putExtra("website_key", websiteString);
         website.putExtra("name_key", nameString);
 
-        Log.i(TAG, "open: WebActivty");
+        Log.i(TAG, "open: WebActivty with " + websiteString);
+        Log.i(TAG, "open: WebActivty with " + nameString);
 
         startActivityForResult(website,10);
     }
@@ -145,14 +150,14 @@ public class MainActivity extends AppCompatActivity
 
             Log.i(TAG, "onActivityResult: " + websiteString);
 
-            //保存备忘录内容数据到SharedPreferences
+            //保存新增网址数据到SharedPreferences
             SharedPreferences sp2 = getSharedPreferences("website", Activity.MODE_PRIVATE);
             SharedPreferences.Editor editor = sp2.edit();
             editor.putString("website_content2", websiteString);
             editor.putString("name_content2", nameString);
             editor.apply();
-            Log.i(TAG, "save to sp:" + websiteString);
-            Log.i(TAG, "save to sp:" + nameString);
+            Log.i(TAG, "Main save to sp:" + websiteString);
+            Log.i(TAG, "Main save to sp:" + nameString);
         }
 
         super.onActivityResult(requestCode, resultCode, data);

@@ -14,7 +14,7 @@ import android.widget.Button;
 
 public class WebActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "WebActivity";
-    Button btn_baidu, btn_bing, btn_csdn, btn_cnki, btn_new, btn_set, btn_back;
+    Button btn_baidu, btn_bing, btn_csdn, btn_youdao, btn_new, btn_set, btn_back;
     Uri uri;
     String websiteString, nameString;
 
@@ -25,8 +25,14 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
         initView();
 
         SharedPreferences sharedPreferences = getSharedPreferences("website", Activity.MODE_PRIVATE);
-        websiteString = sharedPreferences.getString("website_key", "");
-        nameString = sharedPreferences.getString("name_key", "");
+        websiteString = sharedPreferences.getString("website_content", "");
+        nameString = sharedPreferences.getString("name_content", "");
+
+        websiteString = getIntent().getStringExtra("website_key");
+        nameString = getIntent().getStringExtra("name_key");
+
+        Log.i(TAG, "onCreate: get from Main: " + websiteString);
+        Log.i(TAG, "onCreate: get from Main: " + nameString);
 
         btn_new.setText(nameString);
     }
@@ -35,7 +41,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
         btn_baidu = findViewById(R.id.btn_baidu);
         btn_bing = findViewById(R.id.btn_bing);
         btn_csdn = findViewById(R.id.btn_csdn);
-        btn_cnki = findViewById(R.id.btn_cnki);
+        btn_youdao = findViewById(R.id.btn_youdao);
         btn_new = findViewById(R.id.btn_new);
         btn_set = findViewById(R.id.btn_set_web);
         btn_back = findViewById(R.id.btn_web_back);
@@ -43,7 +49,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
         btn_baidu.setOnClickListener(this);
         btn_bing.setOnClickListener(this);
         btn_csdn.setOnClickListener(this);
-        btn_cnki.setOnClickListener(this);
+        btn_youdao.setOnClickListener(this);
         btn_new.setOnClickListener(this);
         btn_set.setOnClickListener(this);
         btn_back.setOnClickListener(this);
@@ -63,12 +69,12 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
             uri = Uri.parse("https://www.csdn.net/");
             Intent csdn = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(csdn);
-        } else if (v.getId()==R.id.btn_cnki) {
-            uri = Uri.parse("https://www.cnki.net/");
-            Intent cnki = new Intent(Intent.ACTION_VIEW, uri);
-            startActivity(cnki);
+        } else if (v.getId()==R.id.btn_youdao) {
+            uri = Uri.parse("https://dict.youdao.com/");
+            Intent youdao = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(youdao);
         } else if (v.getId()==R.id.btn_new) {
-            uri = Uri.parse(nameString);
+            uri = Uri.parse(websiteString);
             Intent newWeb = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(newWeb);
         } else if (v.getId()==R.id.btn_set_web) {
@@ -78,7 +84,12 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
             startActivityForResult(set, 12);
         } else if (v.getId()==R.id.btn_web_back) {
             Intent back = getIntent();
-            Log.i(TAG, "Web back: back to main");
+            Bundle bdl = new Bundle();
+            bdl.putString("website_content", websiteString);
+            bdl.putString("name_content", nameString);
+            back.putExtras(bdl);
+            Log.i(TAG, "Web back: back to main with " + websiteString);
+            Log.i(TAG, "Web back: back to main with " + nameString);
             setResult(11, back);
             finish();
         }
@@ -93,14 +104,16 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
             Log.i(TAG, "onActivityResult: " + websiteString);
             Log.i(TAG, "onActivityResult: " + nameString);
 
-            //保存备忘录内容数据到SharedPreferences
+            //保存新增网址数据到SharedPreferences
             SharedPreferences sp = getSharedPreferences("website", Activity.MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
             editor.putString("website_content", websiteString);
             editor.putString("name_content", nameString);
             editor.apply();
-            Log.i(TAG, "save to sp:" + websiteString);
-            Log.i(TAG, "save to sp:" + nameString);
+            Log.i(TAG, "Web save to sp:" + websiteString);
+            Log.i(TAG, "Web save to sp:" + nameString);
+
+            btn_new.setText(nameString);
         }
 
         super.onActivityResult(requestCode, resultCode, data);

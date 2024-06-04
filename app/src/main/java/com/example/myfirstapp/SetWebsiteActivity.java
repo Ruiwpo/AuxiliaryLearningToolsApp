@@ -27,14 +27,14 @@ public class SetWebsiteActivity extends AppCompatActivity {
         newName.setText(nameString);
     }
 
-    public void finish(View btn) {
-        //保存新的备忘录数据
+    public void finishSet(View btn) {
+        //保存新的网址数据
         webString = newWeb.getText().toString();
         Log.i(TAG, "save new website: " + webString);
         nameString = newName.getText().toString();
         Log.i(TAG, "save new website name: " + nameString);
 
-        //带回备忘录数据到主页面
+        //带回新增网址数据到前一个页面
         Intent newWebIntent = getIntent();
         Bundle bdl = new Bundle();
         bdl.putString("website_key2", webString);
