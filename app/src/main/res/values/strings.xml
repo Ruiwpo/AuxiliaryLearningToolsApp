@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">StudyManagementApp</string>
+    <string name="app_name">MyStudyHelper</string>
     <string name="title">STUDY</string>
     <string name="pause">PAUSE</string>
     <string name="start">START</string>
