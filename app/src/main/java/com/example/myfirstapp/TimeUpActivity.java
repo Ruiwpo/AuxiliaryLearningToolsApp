@@ -14,5 +14,6 @@ public class TimeUpActivity extends AppCompatActivity {
 
         //到时间后弹出“Time Up!”的提示对话框，点击“Close"即可关闭
         new AlertDialog.Builder(TimeUpActivity.this).setTitle("Alarm Clock").setMessage("Time Up!").setPositiveButton("Close", (dialog, which) -> TimeUpActivity.this.finish()).show();
+
     }
 }

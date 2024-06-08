@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.EmptyStackException;
 import java.util.Stack;
 
 public class CalculatorActivity extends AppCompatActivity implements View.OnClickListener {
@@ -135,139 +136,148 @@ public class CalculatorActivity extends AppCompatActivity implements View.OnClic
 
     //将输入的中缀表达式转为后缀表达式
     private void transString(String s) {
-        char[] sArr = s.toCharArray();
-        int i = 0;
-        while (sArr[i]!='=') {
-            if(sArr[i]=='('){
-                st1.push('(');
-                i++;
-            } else if (sArr[i]==')') {
-                Character e = st1.pop();
-                while(e!='('){
-                    trans_s += e;
-                    e = st1.pop();
-                }
-                i++;
-            } else if (sArr[i]=='+'){
-                while(!st1.isEmpty()){
-                    Character e = st1.peek();
-                    if (e!='('){
-                        trans_s += e;
-                        st1.pop();
-                    } else break;
-                }
-                st1.push('+');
-                i++;
-            } else if (sArr[i]=='-') {
-                while (!st1.isEmpty()) {
-                    Character e = st1.peek();
-                    if (e != '(') {
-                        trans_s += e;
-                        st1.pop();
-                    } else break;
-                }
-                st1.push('-');
-                i++;
-            } else if (sArr[i]=='*') {
-                while (!st1.isEmpty()) {
-                    Character e = st1.peek();
-                    if (e=='*' || e=='/') {
-                        trans_s += 'e';
-                        st1.pop();
-                    } else break;
-                }
-                st1.push('*');
-                i++;
-            } else if (sArr[i]=='/') {
-                while (!st1.isEmpty()) {
-                    Character e = st1.peek();
-                    if (e=='*' || e=='/') {
-                        trans_s += 'e';
-                        st1.pop();
-                    } else break;
-                }
-                st1.push('/');
-                i++;
-            } else {
-                while (sArr[i]>='0' && sArr[i]<='9' || sArr[i]=='.'){
-                    trans_s += sArr[i];
+        try {
+            char[] sArr = s.toCharArray();
+            int i = 0;
+            while (sArr[i]!='=') {
+                if(sArr[i]=='('){
+                    st1.push('(');
                     i++;
+                } else if (sArr[i]==')') {
+                    Character e = st1.pop();
+                    while(e!='('){
+                        trans_s += e;
+                        e = st1.pop();
+                    }
+                    i++;
+                } else if (sArr[i]=='+'){
+                    while(!st1.isEmpty()){
+                        Character e = st1.peek();
+                        if (e!='('){
+                            trans_s += e;
+                            st1.pop();
+                        } else break;
+                    }
+                    st1.push('+');
+                    i++;
+                } else if (sArr[i]=='-') {
+                    while (!st1.isEmpty()) {
+                        Character e = st1.peek();
+                        if (e != '(') {
+                            trans_s += e;
+                            st1.pop();
+                        } else break;
+                    }
+                    st1.push('-');
+                    i++;
+                } else if (sArr[i]=='*') {
+                    while (!st1.isEmpty()) {
+                        Character e = st1.peek();
+                        if (e=='*' || e=='/') {
+                            trans_s += 'e';
+                            st1.pop();
+                        } else break;
+                    }
+                    st1.push('*');
+                    i++;
+                } else if (sArr[i]=='/') {
+                    while (!st1.isEmpty()) {
+                        Character e = st1.peek();
+                        if (e=='*' || e=='/') {
+                            trans_s += 'e';
+                            st1.pop();
+                        } else break;
+                    }
+                    st1.push('/');
+                    i++;
+                } else {
+                    while (sArr[i]>='0' && sArr[i]<='9' || sArr[i]=='.'){
+                        trans_s += sArr[i];
+                        i++;
+                    }
+                    trans_s += '#';
                 }
-                trans_s += '#';
             }
+            while (!st1.isEmpty()){
+                Character e = st1.pop();
+                trans_s += e;
+            }
+            trans_s += '=';
+        } catch (EmptyStackException e) {
+            trans_s = "--";
+            flag = 1;
         }
-        while (!st1.isEmpty()){
-            Character e = st1.pop();
-            trans_s += e;
-        }
-        trans_s += '=';
     }
 
     //通过后缀表达式获得计算结果
     private void getResult(String trans_s) {
-        double a, b, c, result = 0;
-        int i=0;
-        char[] sArr = trans_s.toCharArray();
-        while (sArr[i]!='=') {
-            if (sArr[i]=='+') {
-                a = st2.pop();
-                b = st2.pop();
-                c = b + a;
-                st2.push(c);
-            } else if (sArr[i]=='-') {
-                a = st2.pop();
-                b = st2.pop();
-                c = b - a;
-                st2.push(c);
-            } else if (sArr[i]=='*') {
-                a = st2.pop();
-                b = st2.pop();
-                c = b * a;
-                st2.push(c);
-            } else if (sArr[i]=='/') {
-                a = st2.pop();
-                b = st2.pop();
-                if (a!=0) {
-                    c = b / a;
+        try{
+            double a, b, c, result = 0;
+            int i=0;
+            char[] sArr = trans_s.toCharArray();
+            while (sArr[i]!='=' && flag==0) {
+                if (sArr[i]=='+') {
+                    a = st2.pop();
+                    b = st2.pop();
+                    c = b + a;
                     st2.push(c);
+                } else if (sArr[i]=='-') {
+                    a = st2.pop();
+                    b = st2.pop();
+                    c = b - a;
+                    st2.push(c);
+                } else if (sArr[i]=='*') {
+                    a = st2.pop();
+                    b = st2.pop();
+                    c = b * a;
+                    st2.push(c);
+                } else if (sArr[i]=='/') {
+                    a = st2.pop();
+                    b = st2.pop();
+                    if (a!=0) {
+                        c = b / a;
+                        st2.push(c);
+                    }
+                    //当除数为0时，发生除0错误，计算器不显示结果，退出本次计算
+                    else {
+                        Log.i(TAG, "getResult: error_0");
+                        result_show.setText("--");
+                        flag = 1;
+                        break;
+                    }
+                } else if (sArr[i]>='0' && sArr[i]<='9' || sArr[i]=='.') {
+                    String num = "";
+                    while (sArr[i]>='0' && sArr[i]<='9' || sArr[i]=='.') {
+                        num += sArr[i];
+                        i++;
+                    }
+                    i--;
+                    st2.push(Double.parseDouble(num));
                 }
-                //当除数为0时，发生除0错误，计算器不显示结果，退出本次计算
-                else {
-                    Log.i(TAG, "getResult: error_0");
-                    result_show.setText("--");
-                    flag = 1;
-                    break;
-                }
-            } else if (sArr[i]>='0' && sArr[i]<='9' || sArr[i]=='.') {
-                String num = "";
-                while (sArr[i]>='0' && sArr[i]<='9' || sArr[i]=='.') {
-                    num += sArr[i];
-                    i++;
-                }
-                i--;
-                st2.push(Double.parseDouble(num));
+                i++;
             }
-            i++;
-        }
 
-        //未发生除0错误时，显示计算结果
-        if(flag==0) {
-            result = st2.peek();
-            if (result == (int) result){
-                result_show.setText('=' + String.valueOf((int)result));  //结果为整数
-            } else if (((result - (int) result)*10)%2==0 || ((result - (int) result)*10)%5==0) {
-                result_show.setText('=' + String.format("%.1f", result));  //结果是小数，并且为0.2或0.5的倍数
-            } else if (((result - (int) result)*100)%25==0) {
-                result_show.setText('=' + String.format("%.2f", result));  //结果为小数，并且为0.25的倍数
-            } else if (((result - (int) result)*1000)%125==0) {
-                result_show.setText('=' + String.format("%.3f", result));  //结果为小数，并且为0.125的倍数
-            } else if (((result - (int) result)*10000)%625==0) {
-                result_show.setText('=' + String.format("%.4f", result));  //结果为小数，并且为0.0625的倍数
-            } else if (((result - (int) result)*100000)%3125==0) {
-                result_show.setText('=' + String.format("%.5f", result));  //结果为小数，并且为0.03125的倍数
-            } else {
-                result_show.setText('=' + String.format("%.6f", result));  //结果为小数，且小数部分大于等于6位
+            //未发生除0错误时，显示计算结果
+            if(flag==0) {
+                result = st2.peek();
+                if (result == (int) result){
+                    result_show.setText('=' + String.valueOf((int)result));  //结果为整数
+                } else if (((result - (int) result)*10)%2==0 || ((result - (int) result)*10)%5==0) {
+                    result_show.setText('=' + String.format("%.1f", result));  //结果是小数，并且为0.2或0.5的倍数
+                } else if (((result - (int) result)*100)%25==0) {
+                    result_show.setText('=' + String.format("%.2f", result));  //结果为小数，并且为0.25的倍数
+                } else if (((result - (int) result)*1000)%125==0) {
+                    result_show.setText('=' + String.format("%.3f", result));  //结果为小数，并且为0.125的倍数
+                } else if (((result - (int) result)*10000)%625==0) {
+                    result_show.setText('=' + String.format("%.4f", result));  //结果为小数，并且为0.0625的倍数
+                } else if (((result - (int) result)*100000)%3125==0) {
+                    result_show.setText('=' + String.format("%.5f", result));  //结果为小数，并且为0.03125的倍数
+                } else {
+                    result_show.setText('=' + String.format("%.6f", result));  //结果为小数，且小数部分大于等于6位
+                }
             }
+        } catch (Exception e){
+            result_show.setText("Wrong "+"\n"+"expression");  //用户输入不合法表达式时，显示错误提示
         }
     }
 

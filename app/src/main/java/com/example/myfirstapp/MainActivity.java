@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity
     private Button pause;  //暂停计时按钮
     private Button reset;  //重置计时器按钮
     private long record_time = 0;  //当暂停时，记录已经经过的的时间
-    private String memoString, websiteString, nameString;
+    private String memoString, timeString = "no alarm clock", websiteString, nameString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +31,17 @@ public class MainActivity extends AppCompatActivity
         initView();
 
         SharedPreferences sharedPreferences = getSharedPreferences("memo", Activity.MODE_PRIVATE);
-        memoString = sharedPreferences.getString("memo_context", "");
+        memoString = sharedPreferences.getString("memo_content", "");
 
-        SharedPreferences sharedPreferences2 = getSharedPreferences("website", Activity.MODE_PRIVATE);
-        websiteString = sharedPreferences2.getString("website_content2", "");
-        nameString = sharedPreferences2.getString("name_content2", "");
+        SharedPreferences sharedPreferences2 = getSharedPreferences("alarmClock", Activity.MODE_PRIVATE);
+        timeString = sharedPreferences2.getString("alarm_clock_content", "");
+
+        SharedPreferences sharedPreferences3 = getSharedPreferences("website", Activity.MODE_PRIVATE);
+        websiteString = sharedPreferences3.getString("website_content2", "");
+        nameString = sharedPreferences3.getString("name_content2", "");
 
         Log.i(TAG, "onCreate: Main get from sp:" + memoString);
+        Log.i(TAG, "onCreate: Main get from sp:" + timeString);
         Log.i(TAG, "onCreate: Main get from sp:" + websiteString);
         Log.i(TAG, "onCreate: Main get from sp:" + nameString);
     }
@@ -96,10 +100,11 @@ public class MainActivity extends AppCompatActivity
     //打开闹钟界面
     public void openAlarmClock(View v){
         Intent alarmClock = new Intent(this, AlarmClockActivity.class);
+        alarmClock.putExtra("alarm_clock_key", timeString);
 
         Log.i(TAG, "open: AlarmClockActivty");
 
-        startActivity(alarmClock);
+        startActivityForResult(alarmClock, 3);
     }
 
     //打开计算器页面
@@ -133,9 +138,21 @@ public class MainActivity extends AppCompatActivity
             //保存备忘录内容数据到SharedPreferences
             SharedPreferences sp = getSharedPreferences("memo", Activity.MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
-            editor.putString("memo_context", memoString);
+            editor.putString("memo_content", memoString);
             editor.apply();
             Log.i(TAG, "save to sp:" + memoString);
+        } else if (requestCode==3 && resultCode==4) {
+            Bundle bdl2 = data.getExtras();
+            timeString = bdl2.getString("alarm_clock_key2", "");
+
+            Log.i(TAG, "onActivityResult: " + timeString);
+
+            //保存新增网址数据到SharedPreferences
+            SharedPreferences sp2 = getSharedPreferences("alarmClock", Activity.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp2.edit();
+            editor.putString("alarm_clock_content", timeString);
+            editor.apply();
+            Log.i(TAG, "Main save to sp:" + timeString);
         } else if (requestCode==10 && resultCode==11) {
             Bundle bdl2 = data.getExtras();
             websiteString = bdl2.getString("website_content", "");
@@ -144,8 +161,8 @@ public class MainActivity extends AppCompatActivity
             Log.i(TAG, "onActivityResult: " + websiteString);
 
             //保存新增网址数据到SharedPreferences
-            SharedPreferences sp2 = getSharedPreferences("website", Activity.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sp2.edit();
+            SharedPreferences sp3 = getSharedPreferences("website", Activity.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp3.edit();
             editor.putString("website_content2", websiteString);
             editor.putString("name_content2", nameString);
             editor.apply();

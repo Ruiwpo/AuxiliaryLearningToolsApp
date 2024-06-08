@@ -3,6 +3,7 @@ package com.example.myfirstapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -22,12 +23,16 @@ public class AlarmClockActivity extends AppCompatActivity implements View.OnClic
     private Button cancel_alarm_clock;
     private AlarmManager alarmManager;
     private PendingIntent pi;
+    private String timeString = "no alarm clock";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm_clock);
         initView();
+
+        timeString = getIntent().getStringExtra("alarm_clock_key");
+        alarm_clock_show.setText(timeString);
     }
 
     private void initView() {
@@ -35,9 +40,6 @@ public class AlarmClockActivity extends AppCompatActivity implements View.OnClic
         set_alarm_clock = findViewById(R.id.setClock);
         cancel_alarm_clock = findViewById(R.id.cancelClock);
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-        //未设置闹钟时，隐藏取消闹钟按钮
-        cancel_alarm_clock.setVisibility(View.GONE);
 
         Intent intent = new Intent(AlarmClockActivity.this, TimeUpActivity.class);
         pi = PendingIntent.getActivity(AlarmClockActivity.this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
@@ -52,7 +54,7 @@ public class AlarmClockActivity extends AppCompatActivity implements View.OnClic
         //设置闹钟
         if(v.getId()==R.id.setClock) {
             Calendar currentTime = Calendar.getInstance();
-            new TimePickerDialog(AlarmClockActivity.this, 0, (view, hourOfDay, minute) -> {
+            new TimePickerDialog(AlarmClockActivity.this, AlertDialog.THEME_HOLO_LIGHT, (view, hourOfDay, minute) -> {
                   //设置当前时间
                   Calendar c = Calendar.getInstance();
                   c.setTimeInMillis(System.currentTimeMillis());
@@ -62,29 +64,29 @@ public class AlarmClockActivity extends AppCompatActivity implements View.OnClic
                   //AlarmManager在设置的时间启动闹钟
                   alarmManager.set(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pi);
                   //设好闹钟后在页面中显示设定的闹钟时间
-                  alarm_clock_show.setText(String.valueOf(c.getTime()));
+                  timeString = String.valueOf(c.getTime());
+                  alarm_clock_show.setText(timeString);
 
-            }, currentTime.get(Calendar.HOUR_OF_DAY), currentTime.get(Calendar.MINUTE), false).show();
-
-            //闹钟设好后设置取消闹钟按钮为可见
-            cancel_alarm_clock.setVisibility(View.VISIBLE);
+            }, currentTime.get(Calendar.HOUR_OF_DAY), currentTime.get(Calendar.MINUTE), true).show();
         }
         //取消闹钟
         else if (v.getId() == R.id.cancelClock) {
             //取消AlarmManager在设定时间的响应
             alarmManager.cancel(pi);
-            //隐藏取消闹钟按钮
-            cancel_alarm_clock.setVisibility(View.GONE);
             //在界面显示没有闹钟
-            alarm_clock_show.setText("no alarm clock");
+            timeString = "no alarm clock";
+            alarm_clock_show.setText(timeString);
         }
     }
 
     //返回主界面
     public void back1(View btn) {
-        Intent retIntent = getIntent();
-        Log.i(TAG, "back1: back to main");
-        setResult(4, retIntent);
+        Intent alarmIntent = getIntent();
+        Bundle bdl = new Bundle();
+        bdl.putString("alarm_clock_key2", timeString);
+        alarmIntent.putExtras(bdl);
+        Log.i(TAG, "alarm clock: back to main");
+        setResult(4, alarmIntent);
         finish();
     }
 }
